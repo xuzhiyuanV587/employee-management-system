@@ -32,7 +32,7 @@ const authStore = useAuthStore()
 const formRef = ref<FormInstance>()
 const loading = ref(false)
 
-const form = ref({ username: '', password: '' })
+const form = ref({ username: 'superadmin', password: 'superadmin' })
 
 const rules: FormRules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
