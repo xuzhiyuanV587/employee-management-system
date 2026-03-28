@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/admSystem/',
+  base: '/admSystem',
   server: {
     port: 5001,
     proxy: {
