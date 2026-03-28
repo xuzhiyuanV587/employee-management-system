@@ -15,7 +15,7 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 # 配置变量
-DEPLOY_DIR="/var/www/employee-system"
+DEPLOY_DIR="/root/var/www/code"
 NGINX_CONF="/etc/nginx/sites-available/employee-system"
 
 # 检查是否为 root 用户

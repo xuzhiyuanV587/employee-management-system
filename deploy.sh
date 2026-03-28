@@ -17,7 +17,7 @@ NC='\033[0m' # No Color
 # 配置变量
 FRONTEND_DIR="frontend"
 BACKEND_DIR="server"
-DEPLOY_DIR="/var/www/employee-system"
+DEPLOY_DIR="/root/var/www/code"
 NGINX_CONF="/etc/nginx/sites-available/employee-system"
 PM2_APP_NAME="employee-system-api"
 
