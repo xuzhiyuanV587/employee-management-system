@@ -30,101 +30,87 @@ if ! command -v nginx &> /dev/null; then
   exit 1
 fi
 
+# 检查 Nginx 主配置文件
+echo -e "\n${YELLOW}检查 Nginx 主配置...${NC}"
+if ! grep -q "include.*sites-enabled" /etc/nginx/nginx.conf 2>/dev/null; then
+  echo -e "${YELLOW}警告: /etc/nginx/nginx.conf 可能未包含 sites-enabled 目录${NC}"
+  echo -e "${YELLOW}请确保 nginx.conf 的 http 块中有以下配置:${NC}"
+  echo -e "  include /etc/nginx/sites-enabled/*;"
+fi
+
+# 确保目录存在
+mkdir -p /etc/nginx/sites-available
+mkdir -p /etc/nginx/sites-enabled
+
 # 配置 Nginx
 echo -e "\n${YELLOW}配置 Nginx...${NC}"
-if [ ! -f "$NGINX_CONF" ]; then
-  cat > $NGINX_CONF << 'EOF'
-server {
-  listen 80;
-  server_name _;
 
-  # 二级目录部署 /admSystem
-  location /admSystem/ {
-    alias /root/var/www/code/frontend/;
-    index index.html;
-    try_files $uri $uri/ /admSystem/index.html;
-  }
-
-  # 处理 /admSystem 不带斜杠的情况
-  location = /admSystem {
-    return 301 /admSystem/;
-  }
-
-  # API 代理
-  location /api/ {
-    proxy_pass http://localhost:3001/api/;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header Host $host;
-    proxy_cache_bypass $http_upgrade;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-
-  # Gzip 压缩
-  gzip on;
-  gzip_vary on;
-  gzip_min_length 1024;
-  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml;
-}
-EOF
-
-  ln -sf $NGINX_CONF /etc/nginx/sites-enabled/
-  echo -e "${GREEN}✓ Nginx 配置已创建${NC}"
-else
-  echo -e "${YELLOW}Nginx 配置已存在，是否覆盖？(y/n)${NC}"
-  read -r response
-  if [[ "$response" =~ ^[Yy]$ ]]; then
-    cat > $NGINX_CONF << 'EOF'
-server {
-  listen 80;
-  server_name _;
-
-  # 二级目录部署 /admSystem
-  location /admSystem/ {
-    alias /root/var/www/code/frontend/;
-    index index.html;
-    try_files $uri $uri/ /admSystem/index.html;
-  }
-
-  # 处理 /admSystem 不带斜杠的情况
-  location = /admSystem {
-    return 301 /admSystem/;
-  }
-
-  # API 代理
-  location /api/ {
-    proxy_pass http://localhost:3001/api/;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-    proxy_set_header Host $host;
-    proxy_cache_bypass $http_upgrade;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-  }
-
-  # Gzip 压缩
-  gzip on;
-  gzip_vary on;
-  gzip_min_length 1024;
-  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml;
-}
-EOF
-    echo -e "${GREEN}✓ Nginx 配置已更新${NC}"
-  else
-    echo -e "${YELLOW}跳过配置更新${NC}"
-  fi
+# 备份现有配置
+if [ -f "$NGINX_CONF" ]; then
+  cp "$NGINX_CONF" "${NGINX_CONF}.backup.$(date +%Y%m%d_%H%M%S)"
+  echo -e "${GREEN}✓ 已备份现有配置${NC}"
 fi
+
+# 写入配置
+cat > $NGINX_CONF << 'EOF'
+server {
+  listen 80;
+  server_name _;
+
+  # 二级目录部署 /admSystem
+  location /admSystem/ {
+    alias /root/var/www/code/frontend/;
+    index index.html;
+    try_files $uri $uri/ /admSystem/index.html;
+  }
+
+  # 处理 /admSystem 不带斜杠的情况
+  location = /admSystem {
+    return 301 /admSystem/;
+  }
+
+  # API 代理
+  location /api/ {
+    proxy_pass http://localhost:3001/api/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+
+  # Gzip 压缩
+  gzip on;
+  gzip_vary on;
+  gzip_min_length 1024;
+  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml;
+}
+EOF
+
+# 创建软链接
+ln -sf $NGINX_CONF /etc/nginx/sites-enabled/employee-system
+echo -e "${GREEN}✓ Nginx 配置已创建/更新${NC}"
 
 # 测试并重启 Nginx
 echo -e "\n${YELLOW}测试 Nginx 配置...${NC}"
-nginx -t
+if nginx -t 2>&1 | tee /tmp/nginx-test.log; then
+  echo -e "${GREEN}✓ Nginx 配置测试通过${NC}"
 
-echo -e "\n${YELLOW}重启 Nginx...${NC}"
-systemctl restart nginx
-echo -e "${GREEN}✓ Nginx 已重启${NC}"
+  echo -e "\n${YELLOW}重启 Nginx...${NC}"
+  systemctl restart nginx
+  echo -e "${GREEN}✓ Nginx 已重启${NC}"
+else
+  echo -e "${RED}✗ Nginx 配置测试失败${NC}"
+  echo -e "${YELLOW}错误信息：${NC}"
+  cat /tmp/nginx-test.log
+  echo -e "\n${YELLOW}提示：请检查以下内容${NC}"
+  echo -e "1. 确认 /etc/nginx/nginx.conf 包含 http 块"
+  echo -e "2. 确认 http 块中有: include /etc/nginx/sites-enabled/*;"
+  echo -e "3. 检查配置文件: cat $NGINX_CONF"
+  exit 1
+fi
 
 # 完成
 echo -e "\n${GREEN}=========================================${NC}"
