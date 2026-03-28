@@ -39,14 +39,20 @@ server {
   server_name _;
 
   # 二级目录部署 /admSystem
-  location /admSystem {
-    alias /root/var/www/code/frontend;
+  location /admSystem/ {
+    alias /root/var/www/code/frontend/;
     index index.html;
     try_files $uri $uri/ /admSystem/index.html;
   }
 
-  location /api {
-    proxy_pass http://localhost:3001;
+  # 处理 /admSystem 不带斜杠的情况
+  location = /admSystem {
+    return 301 /admSystem/;
+  }
+
+  # API 代理
+  location /api/ {
+    proxy_pass http://localhost:3001/api/;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
@@ -56,14 +62,11 @@ server {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
   }
 
-  location ~* ^/admSystem/.*\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
-    alias /root/var/www/code/frontend;
-    expires 1y;
-    add_header Cache-Control "public, immutable";
-  }
-
+  # Gzip 压缩
   gzip on;
-  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+  gzip_vary on;
+  gzip_min_length 1024;
+  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml;
 }
 EOF
 
@@ -79,14 +82,20 @@ server {
   server_name _;
 
   # 二级目录部署 /admSystem
-  location /admSystem {
-    alias /root/var/www/code/frontend;
+  location /admSystem/ {
+    alias /root/var/www/code/frontend/;
     index index.html;
     try_files $uri $uri/ /admSystem/index.html;
   }
 
-  location /api {
-    proxy_pass http://localhost:3001;
+  # 处理 /admSystem 不带斜杠的情况
+  location = /admSystem {
+    return 301 /admSystem/;
+  }
+
+  # API 代理
+  location /api/ {
+    proxy_pass http://localhost:3001/api/;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
@@ -96,14 +105,11 @@ server {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
   }
 
-  location ~* ^/admSystem/.*\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
-    alias /root/var/www/code/frontend;
-    expires 1y;
-    add_header Cache-Control "public, immutable";
-  }
-
+  # Gzip 压缩
   gzip on;
-  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+  gzip_vary on;
+  gzip_min_length 1024;
+  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml;
 }
 EOF
     echo -e "${GREEN}✓ Nginx 配置已更新${NC}"
