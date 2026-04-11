@@ -2,6 +2,9 @@
   <div class="employee-list">
     <PageHeader title="员工管理">
       <template #actions>
+        <el-button type="primary" @click="handleBigFileUpload">
+          <el-icon><Upload /></el-icon> 大文件上传
+        </el-button>
         <el-button type="primary" @click="router.push('/create')">
           <el-icon><Plus /></el-icon> 新建员工
         </el-button>
@@ -89,6 +92,8 @@
       :all-data="getAllData"
     />
 
+    <UploadDialog v-model="showUpload" />
+
     <!-- 离职办理对话框 -->
     <el-dialog v-model="showResignDialog" title="办理离职" width="480px">
       <el-form :model="resignForm" label-width="100px">
@@ -133,6 +138,7 @@ import EmployeeTable from '../components/EmployeeTable.vue'
 import ImportDialog from '../components/ImportDialog.vue'
 import ExportDialog from '../components/ExportDialog.vue'
 import PageHeader from '../components/PageHeader.vue'
+import UploadDialog from '../components/UploadDialog.vue'
 import { printResignCertificate } from '../utils/printCertificate'
 
 const router = useRouter()
@@ -141,6 +147,7 @@ const store = useEmployeeStore()
 const selectedRows = ref<Employee[]>([])
 const showImport = ref(false)
 const showExport = ref(false)
+const showUpload = ref(false)
 const dateRange = ref<[string, string] | null>(null)
 
 // 离职相关
@@ -222,6 +229,10 @@ async function handleImportSuccess(result: { success: number; failed: number }) 
 
 async function getAllData() {
   return await store.exportData()
+}
+
+function handleBigFileUpload() {
+  showUpload.value = true
 }
 
 function handleResignClick(row: Employee) {

@@ -3,6 +3,13 @@ import api from './index'
 export interface LoginParams {
   username: string
   password: string
+  remember?: boolean
+}
+
+export interface RegisterParams {
+  username: string
+  password: string
+  displayName: string
 }
 
 export interface UserInfo {
@@ -29,6 +36,10 @@ export interface AccountInfo {
 
 export function login(params: LoginParams): Promise<LoginResult> {
   return api.post('/auth/login', params).then(res => res.data as LoginResult)
+}
+
+export function register(params: RegisterParams): Promise<LoginResult> {
+  return api.post('/auth/register', params).then(res => res.data as LoginResult)
 }
 
 export function getMe(): Promise<UserInfo> {

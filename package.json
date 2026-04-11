@@ -1,0 +1,24 @@
+{
+  "name": "employee-management-system",
+  "version": "1.0.0",
+  "description": "员工管理系统",
+  "author": "EMS Team",
+  "private": true,
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev",
+    "build": "pnpm --filter frontend run build",
+    "electron:dev": "ELECTRON_BUILD=1 pnpm --filter frontend run build && pnpm run rebuild:electron && electron .",
+    "electron:build": "ELECTRON_BUILD=1 pnpm --filter frontend run build && pnpm run rebuild:electron && electron-builder --config electron-builder.config.js && pnpm run dmg:create",
+    "dmg:create": "bash -c 'DMG_TMP=$(mktemp -d) && cp -R release/mac-arm64/员工管理系统.app \"$DMG_TMP/\" && ln -s /Applications \"$DMG_TMP/Applications\" && hdiutil create -volname 员工管理系统 -srcfolder \"$DMG_TMP\" -ov -format UDZO release/员工管理系统-$(node -p \"require(\\\"./package.json\\\").version\")-arm64.dmg && rm -rf \"$DMG_TMP\"'",
+    "rebuild:electron": "npx @electron/rebuild -f -w better-sqlite3",
+    "rebuild:node": "cd server && pnpm rebuild better-sqlite3",
+    "postelectron:dev": "pnpm run rebuild:node",
+    "postelectron:build": "pnpm run rebuild:node"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^4.0.3",
+    "electron": "^41.2.0",
+    "electron-builder": "^26.8.1"
+  }
+}

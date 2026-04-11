@@ -2,13 +2,14 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const { getTempDir } = require('../config/paths');
 const employeeController = require('../controllers/employeeController');
 const { employeeValidation } = require('../middleware/validators');
 const { handleValidation } = require('../middleware/errorHandler');
 
 // 配置文件上传
 const upload = multer({
-  dest: path.join(__dirname, '..', 'uploads'),
+  dest: getTempDir(),
   fileFilter(req, file, cb) {
     if (file.mimetype === 'text/csv' || file.originalname.endsWith('.csv')) {
       cb(null, true);

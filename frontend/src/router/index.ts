@@ -10,6 +10,12 @@ const router = createRouter({
       meta: { title: '登录', public: true }
     },
     {
+      path: '/register',
+      name: 'Register',
+      component: () => import('../views/RegisterView.vue'),
+      meta: { title: '注册', public: true }
+    },
+    {
       path: '/',
       name: 'EmployeeList',
       component: () => import('../views/EmployeeList.vue'),
@@ -26,6 +32,12 @@ const router = createRouter({
       name: 'AccountList',
       component: () => import('../views/AccountList.vue'),
       meta: { title: '账号管理', adminOnly: true }
+    },
+    {
+      path: '/files',
+      name: 'FileList',
+      component: () => import('../views/FileList.vue'),
+      meta: { title: '下载管理' }
     },
     {
       path: '/create',

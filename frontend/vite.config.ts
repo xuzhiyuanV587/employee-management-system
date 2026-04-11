@@ -3,7 +3,10 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/admSystem',
+  base: process.env.ELECTRON_BUILD ? '/' : '/admSystem',
+  build: {
+    chunkSizeWarningLimit: 1000
+  },
   server: {
     port: 5001,
     proxy: {
