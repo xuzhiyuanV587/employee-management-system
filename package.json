@@ -9,12 +9,14 @@
     "dev": "pnpm -r --parallel run dev",
     "build": "pnpm --filter frontend run build",
     "electron:dev": "ELECTRON_BUILD=1 pnpm --filter frontend run build && pnpm run rebuild:electron && electron .",
-    "electron:build": "ELECTRON_BUILD=1 pnpm --filter frontend run build && pnpm run rebuild:electron && electron-builder --config electron-builder.config.js && pnpm run dmg:create",
-    "dmg:create": "bash -c 'DMG_TMP=$(mktemp -d) && cp -R release/mac-arm64/员工管理系统.app \"$DMG_TMP/\" && ln -s /Applications \"$DMG_TMP/Applications\" && hdiutil create -volname 员工管理系统 -srcfolder \"$DMG_TMP\" -ov -format UDZO release/员工管理系统-$(node -p \"require(\\\"./package.json\\\").version\")-arm64.dmg && rm -rf \"$DMG_TMP\"'",
+    "electron:prepare": "bash -c 'rm -rf .electron-build/server && mkdir -p .electron-build/server && rsync -a --exclude node_modules --exclude data --exclude uploads --exclude .env --exclude __tests__ --exclude jest.config.js --exclude coverage server/ .electron-build/server/ && cd .electron-build/server && npm install --omit=dev --ignore-scripts && cd ../.. && npx @electron/rebuild -f -w better-sqlite3 -m .electron-build/server && mv .electron-build/server/node_modules .electron-build/server/deps'",
+    "electron:build:intel": "ELECTRON_BUILD=1 pnpm --filter frontend run build && pnpm run electron:prepare && BUILD_ARCH=x64 electron-builder --config electron-builder.config.js && pnpm run dmg:create:intel",
+    "electron:build:m": "ELECTRON_BUILD=1 pnpm --filter frontend run build && pnpm run electron:prepare && BUILD_ARCH=arm64 electron-builder --config electron-builder.config.js && pnpm run dmg:create:m",
+    "dmg:create:intel": "bash -c 'DMG_TMP=$(mktemp -d) && cp -R release/mac/员工管理系统.app \"$DMG_TMP/\" && ln -s /Applications \"$DMG_TMP/Applications\" && hdiutil create -volname 员工管理系统 -srcfolder \"$DMG_TMP\" -ov -format UDZO release/员工管理系统-$(node -p \"require(\\\"./package.json\\\").version\")-x64.dmg && rm -rf \"$DMG_TMP\"'",
+    "dmg:create:m": "bash -c 'DMG_TMP=$(mktemp -d) && cp -R release/mac-arm64/员工管理系统.app \"$DMG_TMP/\" && ln -s /Applications \"$DMG_TMP/Applications\" && hdiutil create -volname 员工管理系统 -srcfolder \"$DMG_TMP\" -ov -format UDZO release/员工管理系统-$(node -p \"require(\\\"./package.json\\\").version\")-arm64.dmg && rm -rf \"$DMG_TMP\"'",
     "rebuild:electron": "npx @electron/rebuild -f -w better-sqlite3",
     "rebuild:node": "cd server && pnpm rebuild better-sqlite3",
-    "postelectron:dev": "pnpm run rebuild:node",
-    "postelectron:build": "pnpm run rebuild:node"
+    "postelectron:dev": "pnpm run rebuild:node"
   },
   "devDependencies": {
     "@electron/rebuild": "^4.0.3",

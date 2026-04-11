@@ -82,17 +82,26 @@ function handleCommand(cmd: string) {
 
 .header-nav {
   display: flex;
-  gap: 4px;
+  gap: 2px;
 }
 
 .header-nav .el-button {
   color: rgba(255, 255, 255, 0.7);
   font-size: 14px;
+  padding: 6px 16px;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+  position: relative;
 }
 
-.header-nav .el-button.active,
 .header-nav .el-button:hover {
   color: #fff;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.header-nav .el-button.active {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.28);
 }
 
 .app-title {

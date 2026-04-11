@@ -43,3 +43,4 @@ server/uploads/*
 
 # Electron build output
 release/
+.electron-build
