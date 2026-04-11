@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Coverage
+coverage/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Database (local dev)
+server/data/*.db
+server/data/*.db-wal
+server/data/*.db-shm
+
+# Uploads
+server/uploads/*
+!server/uploads/.gitkeep
+!server/uploads/chunks/.gitkeep
+!server/uploads/files/.gitkeep
+
+# Electron build output
+release/

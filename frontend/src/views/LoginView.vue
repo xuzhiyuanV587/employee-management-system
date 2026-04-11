@@ -11,11 +11,17 @@
           <el-input v-model="form.password" type="password" placeholder="密码" prefix-icon="Lock" size="large" show-password />
         </el-form-item>
         <el-form-item>
+          <el-checkbox v-model="form.remember">记住我（7天内免登录）</el-checkbox>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" size="large" :loading="loading" @click="handleLogin" style="width: 100%">
             登 录
           </el-button>
         </el-form-item>
       </el-form>
+      <div class="login-footer">
+        没有账号？<router-link to="/register">去注册</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -32,7 +38,7 @@ const authStore = useAuthStore()
 const formRef = ref<FormInstance>()
 const loading = ref(false)
 
-const form = ref({ username: 'superadmin', password: 'superadmin' })
+const form = ref({ username: '', password: '', remember: false })
 
 const rules: FormRules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
@@ -44,7 +50,7 @@ async function handleLogin() {
   await formRef.value.validate()
   loading.value = true
   try {
-    await authStore.login(form.value.username, form.value.password)
+    await authStore.login(form.value.username, form.value.password, form.value.remember)
     ElMessage.success('登录成功')
     router.push('/')
   } catch {
@@ -84,5 +90,21 @@ async function handleLogin() {
   margin: 0 0 32px;
   color: #909399;
   font-size: 14px;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #606266;
+}
+
+.login-footer a {
+  color: #409eff;
+  text-decoration: none;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
 }
 </style>

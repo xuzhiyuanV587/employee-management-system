@@ -66,7 +66,8 @@ employee-management-system/
 ## API 路由
 
 **认证路由 (`/api/auth`)：**
-- `POST /api/auth/login` - 用户登录
+- `POST /api/auth/login` - 用户登录（支持 remember 参数延长 Token 至 7 天）
+- `POST /api/auth/register` - 用户自注册（默认角色 user）
 
 **员工路由 (`/api/employees`)：**
 - `GET /api/employees` - 获取员工列表（支持分页、筛选、搜索）

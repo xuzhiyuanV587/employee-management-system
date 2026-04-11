@@ -1,17 +1,14 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
+const { getDataDir, getDbPath } = require('./paths');
 
-const dbDir = path.resolve(__dirname, '..', 'data');
+const dbDir = getDataDir();
 if (!fs.existsSync(dbDir)) {
   fs.mkdirSync(dbDir, { recursive: true });
 }
 
-// DB_PATH 相对于 server/ 目录解析
-const configuredPath = process.env.DB_PATH || './data/employee.db';
-const dbPath = path.isAbsolute(configuredPath)
-  ? configuredPath
-  : path.resolve(__dirname, '..', configuredPath);
+const dbPath = getDbPath();
 const db = new Database(dbPath);
 
 // 启用 WAL 模式以提高并发性能

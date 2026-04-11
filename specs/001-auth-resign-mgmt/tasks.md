@@ -24,14 +24,14 @@
 
 **Purpose**: 安装测试依赖、配置测试框架、创建测试目录结构
 
-- [ ] T001 安装前端测试依赖: `cd frontend && npm install -D vitest @vue/test-utils @vitest/coverage-v8 jsdom happy-dom`
-- [ ] T002 [P] 安装后端测试依赖: `cd server && npm install -D jest supertest`
-- [ ] T003 [P] 创建前端 Vitest 配置文件 `frontend/vitest.config.ts`，配置 environment 为 happy-dom，coverage 目标 ≥80%
-- [ ] T004 [P] 创建后端 Jest 配置文件 `server/jest.config.js`，配置 testEnvironment 为 node，coverage 目标 ≥80%
-- [ ] T005 创建前端测试目录结构 `frontend/__tests__/stores/`、`frontend/__tests__/views/`、`frontend/__tests__/api/`
-- [ ] T006 [P] 创建后端测试目录结构 `server/__tests__/routes/`、`server/__tests__/controllers/`、`server/__tests__/models/`
-- [ ] T007 在 `frontend/package.json` 中添加 test 脚本: `"test": "vitest run"`, `"test:coverage": "vitest run --coverage"`
-- [ ] T008 [P] 在 `server/package.json` 中添加 test 脚本: `"test": "jest"`, `"test:coverage": "jest --coverage"`
+- [X] T001 安装前端测试依赖: `cd frontend && npm install -D vitest @vue/test-utils @vitest/coverage-v8 jsdom happy-dom`
+- [X] T002 [P] 安装后端测试依赖: `cd server && npm install -D jest supertest`
+- [X] T003 [P] 创建前端 Vitest 配置文件 `frontend/vitest.config.ts`，配置 environment 为 happy-dom，coverage 目标 ≥80%
+- [X] T004 [P] 创建后端 Jest 配置文件 `server/jest.config.js`，配置 testEnvironment 为 node，coverage 目标 ≥80%
+- [X] T005 创建前端测试目录结构 `frontend/__tests__/stores/`、`frontend/__tests__/views/`、`frontend/__tests__/api/`
+- [X] T006 [P] 创建后端测试目录结构 `server/__tests__/routes/`、`server/__tests__/controllers/`、`server/__tests__/models/`
+- [X] T007 在 `frontend/package.json` 中添加 test 脚本: `"test": "vitest run"`, `"test:coverage": "vitest run --coverage"`
+- [X] T008 [P] 在 `server/package.json` 中添加 test 脚本: `"test": "jest"`, `"test:coverage": "jest --coverage"`
 
 ---
 
@@ -41,10 +41,10 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T009 创建用户数据模型 `server/models/userModel.js`，从 authRoutes.js 提取所有数据库操作（getUserByUsername, createUser, getAllUsers, deleteUser, updatePassword, updateStatus）
-- [ ] T010 创建认证控制器 `server/controllers/authController.js`，从 authRoutes.js 提取所有业务逻辑（login, getMe, getUsers, createUser, deleteUser, resetPassword, toggleStatus）
-- [ ] T011 重构 `server/routes/authRoutes.js`，仅保留路由定义，调用 authController 中的方法
-- [ ] T012 验证重构后所有现有功能正常：登录、获取用户信息、账号 CRUD
+- [X] T009 创建用户数据模型 `server/models/userModel.js`，从 authRoutes.js 提取所有数据库操作（getUserByUsername, createUser, getAllUsers, deleteUser, updatePassword, updateStatus）
+- [X] T010 创建认证控制器 `server/controllers/authController.js`，从 authRoutes.js 提取所有业务逻辑（login, getMe, getUsers, createUser, deleteUser, resetPassword, toggleStatus）
+- [X] T011 重构 `server/routes/authRoutes.js`，仅保留路由定义，调用 authController 中的方法
+- [X] T012 验证重构后所有现有功能正常：登录、获取用户信息、账号 CRUD
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -58,26 +58,26 @@
 
 ### Tests for User Story 1
 
-- [ ] T013 [P] [US1] 编写 userModel 单元测试 `server/__tests__/models/userModel.test.js`，覆盖 getUserByUsername、createUser（含重复用户名）、getAllUsers、deleteUser、updatePassword、updateStatus
-- [ ] T014 [P] [US1] 编写 authController 单元测试 `server/__tests__/controllers/authController.test.js`，覆盖 login（成功、密码错误、账号禁用）、register（成功、用户名已存在、参数校验）、getMe、remember me 逻辑
-- [ ] T015 [P] [US1] 编写 auth API 路由测试 `server/__tests__/routes/auth.test.js`，使用 supertest 测试 POST /api/auth/login、POST /api/auth/register、GET /api/auth/me 的完整 HTTP 响应
-- [ ] T016 [P] [US1] 编写前端 auth store 测试 `frontend/__tests__/stores/auth.test.ts`，覆盖 login、register、logout、fetchUser、remember me 状态
-- [ ] T017 [P] [US1] 编写前端 auth API 测试 `frontend/__tests__/api/auth.test.ts`，覆盖 login、register、getMe 的 API 调用
-- [ ] T018 [P] [US1] 编写 LoginView 组件测试 `frontend/__tests__/views/LoginView.test.ts`，覆盖表单渲染、提交验证、错误提示、注册链接
+- [X] T013 [P] [US1] 编写 userModel 单元测试 `server/__tests__/models/userModel.test.js`，覆盖 getUserByUsername、createUser（含重复用户名）、getAllUsers、deleteUser、updatePassword、updateStatus
+- [X] T014 [P] [US1] 编写 authController 单元测试 `server/__tests__/controllers/authController.test.js`，覆盖 login（成功、密码错误、账号禁用）、register（成功、用户名已存在、参数校验）、getMe、remember me 逻辑
+- [X] T015 [P] [US1] 编写 auth API 路由测试 `server/__tests__/routes/auth.test.js`，使用 supertest 测试 POST /api/auth/login、POST /api/auth/register、GET /api/auth/me 的完整 HTTP 响应
+- [X] T016 [P] [US1] 编写前端 auth store 测试 `frontend/__tests__/stores/auth.test.ts`，覆盖 login、register、logout、fetchUser、remember me 状态
+- [X] T017 [P] [US1] 编写前端 auth API 测试 `frontend/__tests__/api/auth.test.ts`，覆盖 login、register、getMe 的 API 调用
+- [X] T018 [P] [US1] 编写 LoginView 组件测试 `frontend/__tests__/views/LoginView.test.ts`，覆盖表单渲染、提交验证、错误提示、注册链接
 
 ### Implementation for User Story 1
 
-- [ ] T019 [US1] 在 `server/models/userModel.js` 新增 register 方法，验证用户名唯一性和参数合法性，密码 bcrypt 加密后插入数据库
-- [ ] T020 [US1] 在 `server/controllers/authController.js` 新增 register 方法，调用 userModel.register 并生成 JWT Token 返回
-- [ ] T021 [US1] 在 `server/routes/authRoutes.js` 新增 POST /api/auth/register 路由
-- [ ] T022 [US1] 修改 `server/controllers/authController.js` login 方法，支持 remember 参数：remember=true 时 expiresIn='7d'，默认 '24h'
-- [ ] T023 [US1] 修改 `server/middleware/validators.js`，新增注册参数验证规则（username ≥3字符、password ≥6字符、displayName 非空）
-- [ ] T024 [US1] 在 `frontend/src/api/auth.ts` 新增 register 接口调用和 RegisterParams 类型定义
-- [ ] T025 [US1] 创建注册页面 `frontend/src/views/RegisterView.vue`，包含用户名、密码、确认密码、显示名称表单，带表单验证
-- [ ] T026 [US1] 在 `frontend/src/stores/auth.ts` 新增 register action，调用 API 注册成功后自动登录
-- [ ] T027 [US1] 修改 `frontend/src/views/LoginView.vue`，添加"记住我"复选框和"没有账号？去注册"链接
-- [ ] T028 [US1] 修改 `frontend/src/router/index.ts`，新增 /register 路由指向 RegisterView
-- [ ] T029 [US1] 修改 `frontend/src/api/auth.ts` login 方法，传递 remember 参数
+- [X] T019 [US1] 在 `server/models/userModel.js` 新增 register 方法，验证用户名唯一性和参数合法性，密码 bcrypt 加密后插入数据库
+- [X] T020 [US1] 在 `server/controllers/authController.js` 新增 register 方法，调用 userModel.register 并生成 JWT Token 返回
+- [X] T021 [US1] 在 `server/routes/authRoutes.js` 新增 POST /api/auth/register 路由
+- [X] T022 [US1] 修改 `server/controllers/authController.js` login 方法，支持 remember 参数：remember=true 时 expiresIn='7d'，默认 '24h'
+- [X] T023 [US1] 修改 `server/middleware/validators.js`（register 验证已在 authController 内联实现），新增注册参数验证规则（username ≥3字符、password ≥6字符、displayName 非空）
+- [X] T024 [US1] 在 `frontend/src/api/auth.ts` 新增 register 接口调用和 RegisterParams 类型定义
+- [X] T025 [US1] 创建注册页面 `frontend/src/views/RegisterView.vue`，包含用户名、密码、确认密码、显示名称表单，带表单验证
+- [X] T026 [US1] 在 `frontend/src/stores/auth.ts` 新增 register action，调用 API 注册成功后自动登录
+- [X] T027 [US1] 修改 `frontend/src/views/LoginView.vue`，添加"记住我"复选框和"没有账号？去注册"链接
+- [X] T028 [US1] 修改 `frontend/src/router/index.ts`，新增 /register 路由指向 RegisterView
+- [X] T029 [US1] 修改 `frontend/src/api/auth.ts` login 方法，传递 remember 参数
 
 **Checkpoint**: 用户注册、登录、记住我功能完整可用，所有测试通过
 
@@ -91,13 +91,13 @@
 
 ### Tests for User Story 2
 
-- [ ] T030 [P] [US2] 编写用户管理 API 测试 `server/__tests__/routes/user-management.test.js`，覆盖 GET /users、POST /users、DELETE /users/:id、PUT /users/:id/reset-password、PUT /users/:id/status（含权限校验：非管理员拒绝）
-- [ ] T031 [P] [US2] 编写 AccountList 组件测试 `frontend/__tests__/views/AccountList.test.ts`，覆盖用户列表渲染、新建账号、重置密码、启用/禁用、删除操作
+- [X] T030 [P] [US2] 编写用户管理 API 测试 `server/__tests__/routes/user-management.test.js`，覆盖 GET /users、POST /users、DELETE /users/:id、PUT /users/:id/reset-password、PUT /users/:id/status（含权限校验：非管理员拒绝）
+- [X] T031 [P] [US2] 编写 AccountList 组件测试 `frontend/__tests__/views/AccountList.test.ts`，覆盖用户列表渲染、新建账号、重置密码、启用/禁用、删除操作
 
 ### Implementation for User Story 2
 
-- [ ] T032 [US2] 验证 `server/controllers/authController.js` 中 getUsers、createUser、deleteUser、resetPassword、toggleStatus 方法的参数校验完整性
-- [ ] T033 [US2] 验证 `frontend/src/views/AccountList.vue` 所有功能正常，修复发现的 bug
+- [X] T032 [US2] 验证 `server/controllers/authController.js` 中 getUsers、createUser、deleteUser、resetPassword、toggleStatus 方法的参数校验完整性
+- [X] T033 [US2] 验证 `frontend/src/views/AccountList.vue` 所有功能正常，修复发现的 bug
 
 **Checkpoint**: 用户管理功能完整且有测试覆盖
 
@@ -111,13 +111,13 @@
 
 ### Tests for User Story 3
 
-- [ ] T034 [P] [US3] 编写离职员工 API 测试 `server/__tests__/routes/resigned-employees.test.js`，覆盖 GET /employees/resigned（分页、筛选、排序）、POST /employees/resign/:id（成功、员工不存在、重复离职）
-- [ ] T035 [P] [US3] 编写 ResignedList 组件测试 `frontend/__tests__/views/ResignedList.test.ts`，覆盖列表渲染、搜索筛选、分页、打印证明按钮
+- [X] T034 [P] [US3] 编写离职员工 API 测试 `server/__tests__/routes/resigned-employees.test.js`，覆盖 GET /employees/resigned（分页、筛选、排序）、POST /employees/resign/:id（成功、员工不存在、重复离职）
+- [X] T035 [P] [US3] 编写 ResignedList 组件测试 `frontend/__tests__/views/ResignedList.test.ts`，覆盖列表渲染、搜索筛选、分页、打印证明按钮
 
 ### Implementation for User Story 3
 
-- [ ] T036 [US3] 验证 `server/controllers/employeeController.js` 中 getResigned 和 resign 方法的完整性和边界处理
-- [ ] T037 [US3] 验证 `frontend/src/views/ResignedList.vue` 所有功能正常，修复发现的 bug
+- [X] T036 [US3] 验证 `server/controllers/employeeController.js` 中 getResigned 和 resign 方法的完整性和边界处理
+- [X] T037 [US3] 验证 `frontend/src/views/ResignedList.vue` 所有功能正常，修复发现的 bug
 
 **Checkpoint**: 离职员工管理功能完整且有测试覆盖
 
@@ -127,12 +127,12 @@
 
 **Purpose**: 全局质量保障和最终验证
 
-- [ ] T038 运行前端测试覆盖率 `cd frontend && npm run test:coverage`，确认 ≥80%，若不足则补充测试
-- [ ] T039 [P] 运行后端测试覆盖率 `cd server && npm run test:coverage`，确认 ≥80%，若不足则补充测试
-- [ ] T040 [P] 运行前端 ESLint + Prettier 检查 `cd frontend && npx eslint src/ --fix && npx prettier --write src/`
-- [ ] T041 [P] 运行前端构建验证 `cd frontend && npm run build`，确认无错误无警告
-- [ ] T042 根据 quickstart.md 执行端到端功能验证：注册→登录→用户管理→离职管理
-- [ ] T043 更新 CLAUDE.md 中 API 路由文档，新增 POST /api/auth/register
+- [X] T038 运行前端测试覆盖率 `cd frontend && npm run test:coverage`，确认 ≥80%，若不足则补充测试
+- [X] T039 [P] 运行后端测试覆盖率 `cd server && npm run test:coverage`，确认 ≥80%，若不足则补充测试
+- [X] T040 [P] 运行前端 ESLint + Prettier 检查（项目未配置 ESLint/Prettier，跳过）
+- [X] T041 [P] 运行前端构建验证 `cd frontend && npm run build`，确认无错误无警告
+- [X] T042 根据 quickstart.md 执行端到端功能验证：注册→登录→用户管理→离职管理
+- [X] T043 更新 CLAUDE.md 中 API 路由文档，新增 POST /api/auth/register
 
 ---
 

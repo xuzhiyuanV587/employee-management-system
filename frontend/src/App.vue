@@ -10,6 +10,7 @@
         <nav class="header-nav">
           <el-button text :class="{ active: route.path === '/' }" @click="router.push('/')">员工管理</el-button>
           <el-button text :class="{ active: route.path === '/resigned' }" @click="router.push('/resigned')">离职员工</el-button>
+          <el-button text :class="{ active: route.path === '/files' }" @click="router.push('/files')">下载管理</el-button>
           <el-button v-if="authStore.isAdmin" text :class="{ active: route.path === '/accounts' }" @click="router.push('/accounts')">账号管理</el-button>
         </nav>
       </div>
