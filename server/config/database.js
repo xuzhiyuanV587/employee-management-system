@@ -102,6 +102,36 @@ function initDatabase() {
     );
   }
 
+  // 合同模板表
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS contract_templates (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      original_filename TEXT NOT NULL,
+      file_path TEXT NOT NULL,
+      placeholders TEXT NOT NULL DEFAULT '[]',
+      placeholder_rule TEXT DEFAULT 'underscore',
+      custom_pattern TEXT,
+      upload_by TEXT,
+      deleted_at DATETIME DEFAULT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
+  // 合同填写记录表
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS contract_records (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      template_id INTEGER NOT NULL,
+      fill_data TEXT NOT NULL DEFAULT '{}',
+      filled_by TEXT,
+      file_path TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (template_id) REFERENCES contract_templates(id)
+    )
+  `);
+
   console.log('数据库初始化完成');
 }
 

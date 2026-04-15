@@ -40,6 +40,18 @@ const router = createRouter({
       meta: { title: '下载管理' }
     },
     {
+      path: '/contracts',
+      name: 'ContractList',
+      component: () => import('../views/ContractList.vue'),
+      meta: { title: '合同管理' }
+    },
+    {
+      path: '/contracts/:id',
+      name: 'ContractDetail',
+      component: () => import('../views/ContractDetail.vue'),
+      meta: { title: '合同详情' }
+    },
+    {
       path: '/create',
       name: 'EmployeeCreate',
       component: () => import('../views/EmployeeCreate.vue'),

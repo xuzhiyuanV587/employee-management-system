@@ -22,6 +22,7 @@ function createApp(options = {}) {
   const employeeRoutes = require('./routes/employeeRoutes');
   const departmentRoutes = require('./routes/departmentRoutes');
   const uploadRoutes = require('./routes/uploadRoutes');
+  const contractRoutes = require('./routes/contractRoutes');
 
   const app = express();
 
@@ -50,6 +51,7 @@ function createApp(options = {}) {
   app.use('/api/employees', authMiddleware, employeeRoutes);
   app.use('/api/departments', authMiddleware, departmentRoutes);
   app.use('/api/upload', authMiddleware, uploadRoutes);
+  app.use('/api/contracts', authMiddleware, contractRoutes);
 
   // 健康检查
   app.get('/api/health', (req, res) => {
